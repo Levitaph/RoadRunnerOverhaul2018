@@ -25,18 +25,10 @@ public class Calibrate extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if (!Robot.intake.isLowlimitSwitchClicked()){
-			Robot.intake.lowerIntakeArms(0.2);
+    	if (!Robot.arm.isLowlimitSwitchClicked()){
+			Robot.arm.setArmSpeed(0.2);
 		} else {
-//			//alpha
-			Robot.intake.calibratePositionToCurrentPos(1607 -85);
-			Robot.intake.positionMotorSimple(1607 - 85);
-			//beta
-//			Robot.intake.calibratePositionToCurrentPos(1583);
-//			Robot.intake.positionMotorSimple(1583);
 			
-//			Robot.intake.calibratePositionToCurrentPos(1510);
-//			Robot.intake.positionMotorSimple(1510);
 			isDone = true;
 		}
     }

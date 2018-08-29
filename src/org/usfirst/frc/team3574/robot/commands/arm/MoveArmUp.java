@@ -1,16 +1,17 @@
-package org.usfirst.frc.team3574.robot.commands.drivetrain;
+package org.usfirst.frc.team3574.robot.commands.arm;
 
 import org.usfirst.frc.team3574.robot.Robot;
 
+import Util.LogCon;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class StopWheels extends Command {
+public class MoveArmUp extends Command {
 
-    public StopWheels() {
-        requires(Robot.drivetrain);
+    public MoveArmUp() {
+        requires(Robot.arm);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +20,7 @@ public class StopWheels extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.arcadeDrive(0, 0);
+    	Robot.arm.setArmSpeed(-0.4);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,6 +35,6 @@ public class StopWheels extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.drivetrain.initDefaultCommand();
+    	Robot.arm.setArmSpeed(0.0);
     }
 }

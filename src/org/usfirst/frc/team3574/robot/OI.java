@@ -8,26 +8,18 @@
 
 package org.usfirst.frc.team3574.robot;
 
-import org.usfirst.frc.team3574.robot.commands.drivetrain.StopWheels;
+import org.usfirst.frc.team3574.robot.commands.arm.MoveArmDown;
+import org.usfirst.frc.team3574.robot.commands.arm.MoveArmUp;
+import org.usfirst.frc.team3574.robot.commands.arm.SetArmPosition;
 import org.usfirst.frc.team3574.robot.commands.intake.Collect;
 import org.usfirst.frc.team3574.robot.commands.intake.Expel;
-import org.usfirst.frc.team3574.robot.commands.intake.MoveArmDown;
-import org.usfirst.frc.team3574.robot.commands.intake.MoveArmUp;
-import org.usfirst.frc.team3574.robot.commands.intake.SetArmPosition;
 import org.usfirst.frc.team3574.robot.commands.shooter.AnyShootKick;
 import org.usfirst.frc.team3574.robot.commands.shooter.HighShootSpinUp;
-import org.usfirst.frc.team3574.robot.commands.shooter.ShooterStop;
 import org.usfirst.frc.team3574.robot.controllerCode.TriggerButton;
-import org.usfirst.frc.team3574.robot.controllerCode.POVDown;
-import org.usfirst.frc.team3574.robot.controllerCode.POVUp;
+import org.usfirst.frc.team3574.robot.controllerCode.POVCustomAngle;
 
-import com.ctre.phoenix.time.StopWatch;
-
-import Util.Log;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -35,9 +27,8 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
  */
 public class OI {
 
-//	Joystick radStick = new Joystick(0); 
-	XboxController stickler = new XboxController(1);
-	XboxController PidStick = new XboxController(2);
+	XboxController stickler = new XboxController(0);
+	XboxController PidStick = new XboxController(1);
 	
 	static final int TRIGGER = 1;
 	static final int THUMB_SIDE = 2;
@@ -72,7 +63,6 @@ public class OI {
 		/**
 		 * stickler controls
 		 */
-		
 		JoystickButton spinUp = new JoystickButton(stickler, A_BUTTON); 
 		spinUp.whenPressed(new HighShootSpinUp());
 		spinUp.whenReleased(new AnyShootKick());
@@ -91,50 +81,32 @@ public class OI {
 
 		JoystickButton lowerIntakeArm = new JoystickButton(stickler, X_BUTTON);
 		lowerIntakeArm.whileHeld(new MoveArmDown());
-
+		
 	/**
 	 * PIDstick controls
 	 */
+		JoystickButton armPositionUpbadoraibu = new JoystickButton(PidStick, Y_BUTTON);
+		armPositionUpbadoraibu.whenPressed(new SetArmPosition(3150));
 		
-		POVDown armPositionHailHydra = new POVDown(PidStick, POV);
-		armPositionHailHydra.whenActive(new SetArmPosition(800));
+		JoystickButton armPositionBoulderHeight = new JoystickButton(PidStick, X_BUTTON);
+		armPositionBoulderHeight.whenPressed(new SetArmPosition(4200));
 		
-		POVUp armPositionDown = new POVUp(PidStick, POV);
-		armPositionDown.whenActive(new SetArmPosition(800));
+		JoystickButton armPositionHailHydra = new JoystickButton(PidStick, B_BUTTON);
+		armPositionHailHydra.whenPressed(new SetArmPosition(3750));
 		
-	/**
-	 * Joystick controls
-	 */
-//		JoystickButton highShootSpinUp = new JoystickButton(radStick, THUMB_TOP_LEFT);
-//		highShootSpinUp.whenPressed(new HighShootSpinUp());
-//		
-//		JoystickButton kick = new JoystickButton(radStick, TRIGGER);
-//		kick.whenPressed(new AnyShootKick());
-//		
-//		radStickPOVDown collect = new radStickPOVDown(radStick, POV);
-//		collect.whileActive(new Collect());
-//		
-//		radStickPOVUp unload = new radStickPOVUp(radStick, POV);
-//		unload.whileActive(new Expel());
-//		
-//		JoystickButton stopDrivetrain = new JoystickButton(radStick, THUMB_BOTTOM_LEFT);
-//		stopDrivetrain.whileHeld(new StopWheels());
-//		
-//		JoystickButton raiseIntakeArm = new JoystickButton(radStick, THUMB_TOP_RIGHT);
-//		raiseIntakeArm.whileHeld(new MoveArmUp());
-//
-//		JoystickButton lowerIntakeArm = new JoystickButton(radStick, THUMB_BOTTOM_RIGHT);
-//		lowerIntakeArm.whileHeld(new MoveArmDown());
+		JoystickButton armPositionDown = new JoystickButton(PidStick, A_BUTTON);
+		armPositionDown.whenPressed(new SetArmPosition(4500));
+		
+		POVCustomAngle moveArmDownAndStop = new POVCustomAngle(PidStick, POV, 180);
+		moveArmDownAndStop.whenActive(new MoveArmDown());
+		moveArmDownAndStop.whenInactive(new SetArmPosition());
+		
+		POVCustomAngle moveArmUpAndStop = new POVCustomAngle(PidStick, POV, 0);
+		moveArmUpAndStop.whenActive(new MoveArmUp());
+		moveArmUpAndStop.whenInactive(new SetArmPosition());
 	}
-	
-//	public double radStickRotation() {
-//		return -radStick.getRawAxis(2);
-//	}
-
-//	public double radStickY() {
-//		return radStick.getRawAxis(1);
-//	}
-	
+		
+		
 	public double sticklerX() {
 		return stickler.getRawAxis(4);
 	}

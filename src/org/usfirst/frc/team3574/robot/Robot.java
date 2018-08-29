@@ -12,9 +12,12 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team3574.robot.commands.intake.Collect;
+import org.usfirst.frc.team3574.robot.subsystems.Arm;
 import org.usfirst.frc.team3574.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team3574.robot.subsystems.Intake;
 import org.usfirst.frc.team3574.robot.subsystems.Shooter;
+
+import Util.PidPDRVer;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
@@ -37,9 +40,11 @@ public class Robot extends TimedRobot {
 
 	public static Drivetrain drivetrain = new Drivetrain();
 	public static Shooter shooter = new Shooter();
+	public static Arm arm = new Arm();
 	public static Intake intake = new Intake();
 	public static Collect collect = new Collect();
 	public static OI robOi;
+	public static PidPDRVer Pid = new PidPDRVer();
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -132,14 +137,17 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
-	
+
 	@Override
 	public void robotPeriodic() {
+		if(arm.isLowlimitSwitchClicked()) {
+			arm.zeroEncoder();
+		}
 		shooter.log();
-		intake.log();
+		arm.log();
 		robOi.log();
 	}
-	
+
 	public void startCamera() {
 		//This is the one, only, and singular line that makes the camera do it's thing
 		m_visionThread = new Thread(() -> {
@@ -147,12 +155,12 @@ public class Robot extends TimedRobot {
 			UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
 			// Set the resolution
 			camera.setResolution(320, 240);
-			
+
 			// Get a CvSink. This will capture Mats from the camera
 			CvSink cvSink = CameraServer.getInstance().getVideo();
 			// Setup a CvSource. This will send images back to the Dashboard
 			CvSource outputStream
-					= CameraServer.getInstance().putVideo("Rectangle", 320, 240);
+			= CameraServer.getInstance().putVideo("Rectangle", 320, 240);
 
 			// Mats are very memory expensive. Lets reuse this Mat.
 			Mat mat = new Mat();
@@ -169,7 +177,7 @@ public class Robot extends TimedRobot {
 					// skip the rest of the current iteration
 					continue;
 				}
-				
+
 				// Put a rectangle on the image
 				Imgproc.rectangle(mat, new Point(100, 100), new Point(200, 200),
 						new Scalar(255, 255, 255), 5);

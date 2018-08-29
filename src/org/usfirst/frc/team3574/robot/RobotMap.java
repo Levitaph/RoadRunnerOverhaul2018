@@ -14,15 +14,14 @@ package org.usfirst.frc.team3574.robot;
  * floating around.
  */
 public class RobotMap {
-	public static int leftFrontMotorID = 1;
-	public static int leftBackMotorID = 2;
-	public static int rightFrontMotorID = 3;
-	public static int rightBackMotorID = 4;
+	public static int leftFrontMotor = 1;
+	public static int leftBackMotor = 2;
+	public static int rightFrontMotor = 3;
+	public static int rightBackMotor = 4;
 	public static int shooterMotor = 5;
-	public static int motorHoodRotatorID = 8; 
+	public static int motorHoodRotator = 8; 
 	public static int intakeWheelsMotor = 7;
 	public static int intakePositionMotor = 11;
 	public static int intakeRollersMotor = 12;
 	public static int intakePositionMotor2 = 13;
 }
- 

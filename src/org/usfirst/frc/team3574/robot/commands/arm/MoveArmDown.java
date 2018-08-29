@@ -1,18 +1,16 @@
-package org.usfirst.frc.team3574.robot.commands.intake;
+package org.usfirst.frc.team3574.robot.commands.arm;
 
 import org.usfirst.frc.team3574.robot.Robot;
 
-import Util.Print;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class MoveArmUp extends Command {
+public class MoveArmDown extends Command {
 
-    public MoveArmUp() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public MoveArmDown() {
+        requires(Robot.arm);
     }
 
     // Called just before this Command runs the first time
@@ -21,7 +19,7 @@ public class MoveArmUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.raiseIntakeArms(-0.4);
+    	Robot.arm.setArmSpeed(0.2);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,5 +34,6 @@ public class MoveArmUp extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.arm.setArmSpeed(0.0);
     }
 }

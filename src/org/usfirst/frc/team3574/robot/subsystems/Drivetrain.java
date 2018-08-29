@@ -15,10 +15,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Drivetrain extends Subsystem {
 
-	TalonSRX leftFrontMotor = new TalonSRX(RobotMap.leftFrontMotorID);
-	TalonSRX leftBackMotor = new TalonSRX(RobotMap.leftBackMotorID);
-	TalonSRX rightFrontMotor = new TalonSRX(RobotMap.rightFrontMotorID);
-	TalonSRX rightBackMotor = new TalonSRX(RobotMap.rightBackMotorID);
+	TalonSRX leftFrontMotor = new TalonSRX(RobotMap.leftFrontMotor);
+	TalonSRX leftBackMotor = new TalonSRX(RobotMap.leftBackMotor);
+	TalonSRX rightFrontMotor = new TalonSRX(RobotMap.rightFrontMotor);
+	TalonSRX rightBackMotor = new TalonSRX(RobotMap.rightBackMotor);
 
 	public double deadzone = .2;
 	public Drivetrain() {

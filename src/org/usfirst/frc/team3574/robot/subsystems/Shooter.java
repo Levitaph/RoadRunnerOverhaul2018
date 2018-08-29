@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import Util.Log;
-import Util.Print;
+import Util.LogCon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Shooter extends Subsystem {
 
 	TalonSRX shooterWheel = new TalonSRX (RobotMap.shooterMotor);
-	TalonSRX hoodRotator = new TalonSRX (RobotMap.motorHoodRotatorID);
+	TalonSRX hoodRotator = new TalonSRX (RobotMap.motorHoodRotator);
 	
 	public Shooter() {
 	}
@@ -29,7 +29,7 @@ public class Shooter extends Subsystem {
 	}
 	
 	public void log() {
-		Log.aNumber("WheelSpeed", shooterWheel.getMotorOutputPercent());
+		Log.sDashANumber("WheelSpeed", shooterWheel.getMotorOutputPercent());
 	}
 	
     public void initDefaultCommand() {
